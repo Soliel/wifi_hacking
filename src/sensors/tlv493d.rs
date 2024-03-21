@@ -1,5 +1,4 @@
-use defmt::{Format, info, trace};
-use {defmt_rtt as _, panic_probe as _};
+use defmt::{Format, info};
 use embassy_rp::i2c::{Async, I2c, Instance};
 
 pub struct TLV493D<'d, T: Instance> {
@@ -155,14 +154,14 @@ impl<'d, T: Instance> TLV493D<'d, T> {
 
     pub async fn get_sensor_reading(&mut self) -> MagnetVals {
         self.read_device().await;
-        let xTop = self.get_read_data(BX0);
-        let yTop = self.get_read_data(BY0);
-        let zTop = self.get_read_data(BZ0);
-        let xBot = self.get_read_data(BX1);
-        let yBot = self.get_read_data(BY1);
-        let zBot = self.get_read_data(BZ1);
+        let x_top = self.get_read_data(BX0);
+        let y_top = self.get_read_data(BY0);
+        let z_top = self.get_read_data(BZ0);
+        let x_bot = self.get_read_data(BX1);
+        let y_bot = self.get_read_data(BY1);
+        let z_bot = self.get_read_data(BZ1);
         info!("raw bytes: \n\tX-TOP: {:X}, X-BOT: {:X}\n\tY-TOP: {:X}, Y-BOT: {:X}\n\tZ-TOP: {:X}, Z-BOT: {:X}",
-            xTop, xBot, yTop, yBot, zTop, zBot);
+            x_top, x_bot, y_top, y_bot, z_top, z_bot);
 
         let x = (self.get_read_data(BX0) as i8 as i16) << 4 | self.get_read_data(BX1) as i16;
         let y = (self.get_read_data(BY0) as i8 as i16) << 4 | self.get_read_data(BY1) as i16;

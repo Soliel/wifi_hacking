@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "preLaunchTask": "rust: cargo build",
+        "type": "probe-rs-debug",
+        "request": "launch",
+        "name": "probe-rs launch",
+        "cwd": "${workspaceFolder}",
+        "runtimeExecutable": "probe-rs",
+        "runtimeArgs": ["dap-server"],
+        "chip": "rp2040",
+        "speed": 4000,
+        "connectUnderReset": false,
+        "flashingConfig": {
+          "flashingEnabled": true,
+          "haltAfterReset": true,
+          "resetAfterFlashing": true
+        },
+        "coreConfigs": [
+          {
+            "coreIndex": 0,
+            "programBinary": "target\\thumbv6m-none-eabi\\debug\\wifi_hacking",
+            "chip": "RP2040",
+            "svdFile": "./.vscode/rp2040.svd",
+            "rttEnabled": true,
+            "options": {
+              "env": {
+                "DEFMT_LOG": "info"
+              }
+            }
+          }
+        ],
+        "env": {
+          "DEFMT_LOG": "trace"
+        },
+        "consoleLogLevel": "Debug",
+        "wireProtocol": "Swd"
+      },
+    ]
+  }

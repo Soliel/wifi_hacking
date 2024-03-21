@@ -5,4 +5,4 @@ runner = "probe-rs run --chip rp2040 --no-location"
 target = "thumbv6m-none-eabi"
 
 [env]
-DEFMT_LOG = "debug"
+DEFMT_LOG = "info"
